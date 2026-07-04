@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# 런타임 산출물 (예정 — 결정론 원장/샘플은 examples/에 고정 시 제외)
+*.tmp
+.attestra/
+
+# PGXF 인덱스는 파생물 — 설계 단계에서는 추적(구조 조감용), 구현 후 정책 재검토 가능
+# .pgxf/INDEX-*.json
+
+# OS
+.DS_Store
+Thumbs.db
