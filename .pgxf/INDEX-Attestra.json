@@ -40,7 +40,7 @@
     "Docs": {"node": "Docs", "status": "designing", "file": ".pgf/DESIGN-Attestra.md", "line": 72, "depth": 1, "parent": "Attestra", "children": [], "deps": [], "has_ppr": false, "decomposed_to": null, "tags": ["docs"]},
     "Tests": {"node": "Tests", "status": "designing", "file": ".pgf/DESIGN-Attestra.md", "line": 73, "depth": 1, "parent": "Attestra", "children": [], "deps": ["AttestraCore", "Packs"], "has_ppr": false, "decomposed_to": null, "tags": ["test"]}
   },
-  "summary": {"total": 31, "done": 0, "in-progress": 0, "designing": 30, "decomposed": 1, "blocked": 0},
+  "summary": {"total": 33, "done": 0, "in-progress": 0, "designing": 32, "decomposed": 1, "blocked": 0},
   "decomposed_links": {"Packs": ".pgf/DESIGN-AttestraPacks.md"},
   "updated_at": "2026-07-04"
 }
