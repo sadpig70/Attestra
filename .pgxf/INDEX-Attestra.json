@@ -43,6 +43,7 @@
         "Fingerprint",
         "Provenance",
         "Attestation",
+        "SchemaGate",
         "Determinism"
       ],
       "deps": [],
@@ -587,11 +588,30 @@
       "tags": [
         "test"
       ]
+    },
+    "SchemaGate": {
+      "node": "SchemaGate",
+      "status": "done",
+      "file": ".pgf/DESIGN-Attestra.md",
+      "line": 61,
+      "depth": 2,
+      "parent": "AttestraCore",
+      "children": [],
+      "deps": [
+        "Packet"
+      ],
+      "has_ppr": true,
+      "ppr_file": ".pgf/DESIGN-Attestra.md",
+      "ppr_line": 242,
+      "decomposed_to": null,
+      "tags": [
+        "core"
+      ]
     }
   },
   "summary": {
-    "total": 33,
-    "done": 31,
+    "total": 34,
+    "done": 32,
     "in-progress": 2,
     "designing": 0,
     "decomposed": 1,
@@ -600,5 +620,5 @@
   "decomposed_links": {
     "Packs": ".pgf/DESIGN-AttestraPacks.md"
   },
-  "updated_at": "2026-07-04"
+  "updated_at": "2026-07-05"
 }

@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-withheld.schema.json",
+  "title": "Withheld-action packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "withholding"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "withholding": {"type": "object", "properties": {
+      "duty_basis": {"type": "string"},
+      "exposure_doc": {"type": "string"},
+      "rollback_possible": {"type": "boolean"},
+      "authority_valid": {"type": "boolean"}}}
+  }
+}

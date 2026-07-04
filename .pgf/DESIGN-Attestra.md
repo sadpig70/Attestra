@@ -57,6 +57,7 @@ Attestra // 결정론 attestation/verdict 플랫폼 (designing) @v:0.1
         Fingerprint // 정체성 primitive (HELIX-Core 승격) (designing) #core
         Provenance // 계보 추적 + attestation trace (designing) @dep:Fingerprint #core
         Attestation // valid verdict → 발행 가능한 warrant (designing) @dep:Verdict,Ledger,Provenance #core
+        SchemaGate // 팩 packet_schema 런타임 구조 검증 (predicate 이전) (done) @dep:Packet #core
         Determinism // stdlib-only · now/sim 주입 경계 검증기 (designing) #core
     PackContract // 팩 확장 규격 — 모든 도메인 팩의 계약 (designing) @dep:AttestraCore #contract
         PackManifest // 팩 메타(name/version/predicates/schema/fingerprint) (designing) #contract
@@ -250,6 +251,27 @@ def run_pipeline(packet: dict, pack_names: list[str], registry: dict, P: dict, n
 ```
 
 ---
+
+### 3.8 SchemaGate — 팩 packet_schema 런타임 강제 (구조 계약)
+
+```python
+def run_gates(packet, predicates, P, now, id_field, schema) -> dict:
+    """packet 보편검사(사적페이로드+식별자) → ★구조 스키마 검사 → predicate 실행.
+       스키마 위반은 predicate 실행 전 breach. 구조=스키마, 완전성·정책=predicate."""
+    if not validate_packet(packet, id_field)["ok"]:
+        return breach_result("packet", ...)
+    if schema is not None:
+        sv = validate_against_schema(packet, schema)   # stdlib 미니 검증기 (결정론)
+        if not sv["ok"]:
+            return {"verdict": "breach", "reason": "schema_violation",
+                    "worst": "schema", "checks": [], "schema_errors": sv["errors"]}
+    return aggregate(run each predicate)
+    # acceptance_criteria:
+    #   - 팩 매니페스트가 선언한 packet_schema는 loader가 적재 (미존재 시 registry error)
+    #   - 스키마 위반(타입 불일치·섹션 결측) → schema_violation breach, predicate 미실행
+    #   - 구조 계약과 정책 계약 분리 (섹션 존재/타입=스키마, 증거 완전성/정책=predicate)
+    #   - 결정론: stdlib 미니 검증기 (시계/네트워크/random 없음)
+```
 
 ## 4. 결정론 경계 (지배 제약)
 

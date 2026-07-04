@@ -17,6 +17,7 @@ from .ledger import (
 from .fingerprint import normalize, tokenize, fingerprint, fingerprint_pack
 from .provenance import trace_provenance, digest_checks
 from .attestation import issue_attestation
+from .schema import validate_against_schema, load_schema
 
 __all__ = [
     "SEVERITY", "valid", "thin", "breach", "missing", "thin_or_breach", "aggregate_verdict",
@@ -25,4 +26,5 @@ __all__ = [
     "canonical_json", "sha256", "append_record", "build_record", "verify_ledger", "last_record_hash",
     "normalize", "tokenize", "fingerprint", "fingerprint_pack",
     "trace_provenance", "digest_checks", "issue_attestation",
+    "validate_against_schema", "load_schema",
 ]

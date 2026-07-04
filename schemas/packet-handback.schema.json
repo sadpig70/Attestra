@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-handback.schema.json",
+  "title": "Handback packet (structural contract)",
+  "type": "object",
+  "required": ["handback_id", "delegation", "custody", "route", "rollback", "trace"],
+  "properties": {
+    "handback_id": {"type": "string"},
+    "handback_time": {"type": "string"},
+    "delegation": {"type": "object", "properties": {
+      "authority_id": {"type": "string"}, "delegated_to": {"type": "string"},
+      "action": {"type": "string"}, "allowed_actions": {"type": "array"},
+      "evidence_path": {"type": "string"}}},
+    "custody": {"type": "object", "properties": {
+      "artifact_id": {"type": "string"}, "handback_confirmed": {"type": "boolean"},
+      "evidence_path": {"type": "string"}}},
+    "route": {"type": "object", "properties": {
+      "status": {"type": "string"}, "evidence_path": {"type": "string"}}},
+    "rollback": {"type": "object", "properties": {
+      "required": {"type": "boolean"}, "completed": {"type": "boolean"},
+      "evidence_path": {"type": "string"}}},
+    "trace": {"type": "object", "properties": {
+      "digest": {"type": "string"}, "evidence_path": {"type": "string"}}}
+  }
+}

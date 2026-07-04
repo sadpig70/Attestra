@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-context.schema.json",
+  "title": "Context-boundary packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "context"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "context": {"type": "object", "properties": {
+      "crosses_scope": {"type": "boolean"},
+      "policy_gap": {"type": "integer", "minimum": 0},
+      "path_rank": {"type": "number"},
+      "rank_threshold": {"type": "number"}}}
+  }
+}

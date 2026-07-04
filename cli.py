@@ -32,7 +32,8 @@ def _dump(obj):
 def _evaluate(registry, pack_name, packet, now):
     pack = get_pack(registry, pack_name)
     result = run_gates(packet, pack["predicate_fns"], now=now,
-                       id_field=pack.get("id_field", "packet_id"))
+                       id_field=pack.get("id_field", "packet_id"),
+                       schema=pack.get("schema"))
     result["pack"] = pack_name
     result["source_project"] = pack.get("source_project")
     return result

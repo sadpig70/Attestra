@@ -37,7 +37,8 @@ class TestPackSampleVerdicts(unittest.TestCase):
             for sample_name in ("valid", "thin", "breach"):
                 pkt = pack["samples"][sample_name]
                 result = run_gates(pkt, pack["predicate_fns"], now="T",
-                                   id_field=pack.get("id_field", "packet_id"))
+                                   id_field=pack.get("id_field", "packet_id"),
+                                   schema=pack.get("schema"))
                 self.assertEqual(
                     result["verdict"], sample_name,
                     f"pack {name} sample '{sample_name}' -> {result['verdict']} "

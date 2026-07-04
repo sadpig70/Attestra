@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-delegation.schema.json",
+  "title": "Delegation packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "delegation"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "delegation": {"type": "object", "properties": {
+      "work_risk": {"type": "number"},
+      "envelope_max_risk": {"type": "number"},
+      "expected_liability": {"type": "number", "minimum": 0},
+      "liability_limit": {"type": "number", "minimum": 0},
+      "delegated_scope": {"type": "array", "items": {"type": "string"}},
+      "delegator_scope": {"type": "array", "items": {"type": "string"}}}}
+  }
+}

@@ -19,7 +19,8 @@ def run_pipeline(packet, pack_names, registry, P=None, now=""):
     for name in pack_names:
         pack = get_pack(registry, name)
         r = run_gates(packet, pack["predicate_fns"], P, now=now,
-                      id_field=pack.get("id_field", "packet_id"))
+                      id_field=pack.get("id_field", "packet_id"),
+                      schema=pack.get("schema"))
         pack_results.append({"pack": name, **r})
     agg = aggregate_verdict(
         [{"gate": pr["pack"], "verdict": pr["verdict"], "reason": pr["reason"]}

@@ -12,9 +12,11 @@ import os
 import pkgutil
 
 from attestra_core.fingerprint import fingerprint_pack
+from attestra_core.schema import load_schema
 
 _RESERVED = {"loader", "_base"}
 _REQUIRED_MANIFEST = ("name", "version", "predicates", "packet_schema", "source_project")
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def discover_module_names(package="attestra_packs"):
@@ -66,6 +68,18 @@ def load_packs(package="attestra_packs"):
             registry["dropped"].append(
                 {"name": manifest["name"], "reason": f"duplicate_fingerprint_of:{seen_fp[fp]}"})
             continue
+        schema_path = os.path.join(_REPO_ROOT, manifest["packet_schema"])
+        schema = None
+        if os.path.exists(schema_path):
+            try:
+                schema = load_schema(schema_path)
+            except Exception as exc:  # noqa: BLE001
+                registry["errors"].append(f"{manifest['name']}: schema unreadable: {exc}")
+                continue
+        else:
+            registry["errors"].append(
+                f"{manifest['name']}: declared packet_schema not found: {manifest['packet_schema']}")
+            continue
         seen_fp[fp] = manifest["name"]
         registry["packs"][manifest["name"]] = {
             **manifest,                                  # keeps manifest["predicates"] = gate-key strings
@@ -74,6 +88,7 @@ def load_packs(package="attestra_packs"):
             "predicate_fns": list(getattr(mod, "PREDICATES")),  # callables, kept separate
             "samples": dict(getattr(mod, "SAMPLES", {})),
             "id_field": manifest.get("id_field", "packet_id"),
+            "schema": schema,
         }
     return registry
 

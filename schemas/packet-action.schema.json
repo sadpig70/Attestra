@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-action.schema.json",
+  "title": "Action-governance packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "action"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "action": {"type": "object", "properties": {
+      "pre_approved": {"type": "boolean"},
+      "safety_ok": {"type": "boolean"},
+      "post_justified": {"type": "boolean"}}}
+  }
+}

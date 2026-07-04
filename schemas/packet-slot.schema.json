@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-slot.schema.json",
+  "title": "Slot-gate packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "slot"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "slot": {"type": "object", "properties": {
+      "slot_authorized": {"type": "boolean"},
+      "expiry_state": {"type": "string"},
+      "extended": {"type": "boolean"},
+      "reauth": {"type": "boolean"}}}
+  }
+}

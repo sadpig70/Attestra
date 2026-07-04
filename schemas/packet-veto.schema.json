@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-veto.schema.json",
+  "title": "Veto-escrow packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "decision"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "decision": {"type": "object", "properties": {
+      "in_veto_window": {"type": "boolean"},
+      "escrow_state": {"type": "string"},
+      "interrupt_latency_ms": {"type": "number", "minimum": 0},
+      "interrupt_bound_ms": {"type": "number", "minimum": 0}}}
+  }
+}

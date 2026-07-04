@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-policy.schema.json",
+  "title": "Policy-drift packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "policy"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "policy": {"type": "object", "properties": {
+      "baseline_id": {"type": "string"},
+      "current_id": {"type": "string"},
+      "drift": {"type": "number"},
+      "drift_threshold": {"type": "number"},
+      "approval_trace": {"type": "string"}}}
+  }
+}

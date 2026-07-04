@@ -6,7 +6,7 @@
   "design": ".pgf/DESIGN-Attestra.md",
   "decomposed_designs": [".pgf/DESIGN-AttestraPacks.md"],
   "pgxf_index": ".pgxf/INDEX-Attestra.json",
-  "summary": {"total": 33, "done": 31, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
+  "summary": {"total": 34, "done": 32, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
   "nodes": {
     "Attestra": "in-progress",
     "AttestraCore": "done",
@@ -17,6 +17,7 @@
     "AttestraCore.Fingerprint": "done",
     "AttestraCore.Provenance": "done",
     "AttestraCore.Attestation": "done",
+    "AttestraCore.SchemaGate": "done",
     "AttestraCore.Determinism": "done",
     "PackContract": "done",
     "PackContract.PackManifest": "done",
@@ -43,8 +44,9 @@
     "Tests": "done"
   },
   "verify": {
-    "unittests": "python -m unittest discover -s tests: Ran 33 tests OK",
-    "determinism": "cli.py determinism -> clean=True, 22 files scanned (attestra_core + attestra_packs, 0 clock/network/random)",
+    "unittests": "python -m unittest discover -s tests: Ran 41 tests OK",
+    "determinism": "cli.py determinism -> clean=True, 23 files scanned (attestra_core + attestra_packs, 0 clock/network/random)",
+    "schema_enforcement": "per-pack packet_schema loaded by loader (10/10, 0 errors); run_gates enforces structural schema before predicates -> schema_violation breach on missing section / wrong type; all pack samples conform to their schema; validated via CLI (malformed -> breach with schema_errors)",
     "reference_pack_parity": "HandbackPack valid/thin/breach samples -> valid/thin/breach (matches ActionHandbackVerifier); trace-digest tamper -> breach",
     "pipeline_generalizes": "run_pipeline over [spend-boundary, context-boundary, veto-escrow] reproduces SpendBoundary-style composition; one breach -> pipeline breach (worst_pack surfaced)",
     "ledger": "hash-chain append + verify valid; tamper detected; record_hash time-independent (now excluded)",
@@ -58,9 +60,11 @@
     }
   },
   "determinism_boundary": "core+pack-predicates = pure stdlib (now/sim injected); hash excludes now/*_at meta; cli+pipeline = meta/IO layer (still clock-free, --now injected)",
-  "known_deferrals": {
-    "Docs": "README.md written; ARCHITECTURE.md / PACK-CONTRACT.md / DETERMINISM.md not yet written (in-progress)",
-    "packet_schema_enforcement": "manifests declare packet_schema paths but the kernel does not yet validate packets against them at runtime (dangling contract)"
+  "resolved": {
+    "packet_schema_enforcement": "CLOSED 2026-07-05 — added attestra_core/schema.py (stdlib mini validator) + 10 schemas/packet-*.schema.json; loader loads+errors-on-missing; run_gates enforces before predicates; 8 new tests"
   },
-  "next": "close the dangling packet_schema contract: enforce each pack's declared JSON Schema in the gate runtime before predicates run."
+  "known_deferrals": {
+    "Docs": "README.md written; ARCHITECTURE.md / PACK-CONTRACT.md / DETERMINISM.md not yet written (in-progress)"
+  },
+  "next": "second-wave pack expansion OR HELIX loop integration — see report"
 }
