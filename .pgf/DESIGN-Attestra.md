@@ -56,7 +56,8 @@ Attestra // 결정론 attestation/verdict 플랫폼 (designing) @v:0.1
         Ledger // hash-chain append-only 감사 원장 (designing) #core
         Fingerprint // 정체성 primitive (HELIX-Core 승격) (designing) #core
         Provenance // 계보 추적 + attestation trace (designing) @dep:Fingerprint #core
-        Attestation // valid verdict → 발행 가능한 warrant (designing) @dep:Verdict,Ledger,Provenance #core
+        Attestation // valid verdict → 발행 가능한 warrant + 독립 검증(verify_attestation) (designing) @dep:Verdict,Ledger,Provenance #core
+        AttestationLedger // attestation issue/revoke hash-chain 이벤트 원장 (생애주기) (done) @dep:Attestation #core
         SchemaGate // 팩 packet_schema 런타임 구조 검증 (predicate 이전) (done) @dep:Packet #core
         Determinism // stdlib-only · now/sim 주입 경계 검증기 (designing) #core
     PackContract // 팩 확장 규격 — 모든 도메인 팩의 계약 (designing) @dep:AttestraCore #contract
@@ -295,6 +296,27 @@ def run_audit(directory, registry, ledger_path, now, attest_out, pack_override) 
     #   - 라우팅 불가 패킷은 unroutable로 격리 (감사 흐름 중단 없음)
     #   - 비-breach verdict마다 attestation 발행, breach는 발행 거부
     #   - 종료코드: chain invalid/unroutable=2(운영 실패), breach 존재=1(정책 실패), 전부 통과=0
+```
+
+### 3.10 AttestationLedger — warrant 생애주기 (issue → verify → revoke)
+
+```python
+def verify_attestation(attestation, revoked) -> dict:
+    """발행된 warrant를 독립 검증: id가 body를 결속(위·변조 탐지) + 폐기 여부."""
+    expected = "ATT-" + sha256(canonical_json(body_without(id, issued_at)))[:16]
+    id_ok = (expected == attestation["attestation_id"])           # 발행 규칙 재계산
+    is_revoked = attestation["attestation_id"] in revoked         # 폐기 원장 조회
+    return {"valid": id_ok and not is_revoked, "id_ok": id_ok, "revoked": is_revoked}
+
+def append_event(ledger, event, attestation_id, now) -> dict:
+    """issue/revoke 이벤트를 hash-chain 레코드로 append (verdict 원장과 동형).
+       record_hash는 now/*_at 제외 → 시간독립. revoked_ids = revoke 이벤트 집합."""
+    # acceptance_criteria:
+    #   - attestation_id = body digest → 재계산 일치로 위·변조 탐지 (id_ok)
+    #   - issued_at은 id에 무영향 (동일 결과 재발행 = 동일 id, idempotent)
+    #   - revoke 이벤트 존재 → verify_attestation.valid=False (id_ok=True 유지, revoked=True)
+    #   - 체인 무결성 verify + 변조 탐지 (verdict 원장과 동일 규율)
+    #   - audit --att-ledger: 대량 발행 warrant를 이벤트 원장에 함께 체인
 ```
 
 ## 4. 결정론 경계 (지배 제약)

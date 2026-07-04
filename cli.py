@@ -12,7 +12,10 @@ import sys
 
 from attestra_core.gate_runtime import run_gates
 from attestra_core.ledger import append_record, verify_ledger
-from attestra_core.attestation import issue_attestation
+from attestra_core.attestation import issue_attestation, verify_attestation
+from attestra_core.attestation_ledger import (
+    record_issue, record_revoke, revoked_ids, verify_attestation_ledger,
+)
 from attestra_core.determinism import check_tree
 from attestra_packs.loader import load_packs, get_pack
 from attestra_pipeline import run_pipeline
@@ -77,7 +80,26 @@ def cmd_attest(args, registry):
         _dump({"issued": False, "reason": "breach verdict — attestation refused",
                "verdict": result["verdict"]})
         return 1
-    _dump({"issued": True, "attestation": att})
+    out = {"issued": True, "attestation": att}
+    if args.att_ledger:
+        rec = record_issue(args.att_ledger, att, now=args.now)
+        out["att_ledger_index"] = rec["index"]
+    _dump(out)
+    return 0
+
+
+def cmd_verify_attestation(args, _registry):
+    att = _load_json(args.input)
+    revoked = revoked_ids(args.ledger) if args.ledger else set()
+    result = verify_attestation(att, revoked)
+    _dump(result)
+    return 0 if result["valid"] else 1
+
+
+def cmd_revoke_attestation(args, _registry):
+    rec = record_revoke(args.ledger, args.id, reason=args.reason or "", now=args.now)
+    _dump({"revoked": args.id, "att_ledger_index": rec["index"],
+           "record_hash": rec["record_hash"], "chain": verify_attestation_ledger(args.ledger)})
     return 0
 
 
@@ -115,7 +137,8 @@ def cmd_pack(args, registry):
 def cmd_audit(args, registry):
     ledger = args.ledger or os.path.join(args.dir, "audit-ledger.jsonl")
     report = run_audit(args.dir, registry, ledger, now=args.now,
-                       attest_out=args.attest_out, pack_override=args.pack)
+                       attest_out=args.attest_out, pack_override=args.pack,
+                       att_ledger=args.att_ledger)
     if args.report:
         with open(args.report, "w", encoding="utf-8") as f:
             f.write(render_audit_markdown(report))
@@ -171,6 +194,18 @@ def build_parser():
     s = sub.add_parser("attest", parents=[common], help="issue an attestation for a non-breach verdict")
     s.add_argument("--pack", required=True)
     s.add_argument("--input", required=True)
+    s.add_argument("--att-ledger", dest="att_ledger", help="record the issue event to this attestation ledger")
+
+    s = sub.add_parser("verify-attestation", parents=[common],
+                       help="verify an issued attestation binds its body and is not revoked")
+    s.add_argument("--input", required=True)
+    s.add_argument("--ledger", help="attestation ledger to check for revocation")
+
+    s = sub.add_parser("revoke-attestation", parents=[common],
+                       help="append a revoke event for an attestation id")
+    s.add_argument("--id", required=True)
+    s.add_argument("--ledger", required=True)
+    s.add_argument("--reason", help="revocation reason")
 
     s = sub.add_parser("verify", parents=[common], help="verify a ledger's hash chain")
     s.add_argument("--ledger", required=True)
@@ -188,6 +223,7 @@ def build_parser():
     s.add_argument("--dir", required=True)
     s.add_argument("--ledger", help="audit ledger path (default <dir>/audit-ledger.jsonl)")
     s.add_argument("--attest-out", dest="attest_out", help="dir to write issued attestations")
+    s.add_argument("--att-ledger", dest="att_ledger", help="record issue events to this attestation ledger")
     s.add_argument("--pack", help="force every packet through this pack")
     s.add_argument("--report", help="write a markdown summary to this path")
 
@@ -200,6 +236,7 @@ def main(argv=None):
     registry = load_packs()
     dispatch = {
         "sample": cmd_sample, "run": cmd_run, "attest": cmd_attest, "verify": cmd_verify,
+        "verify-attestation": cmd_verify_attestation, "revoke-attestation": cmd_revoke_attestation,
         "report": cmd_report, "pack": cmd_pack, "audit": cmd_audit, "determinism": cmd_determinism,
     }
     if args.cmd == "run" and not args.pack and not args.pipeline:

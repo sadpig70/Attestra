@@ -6,7 +6,7 @@
   "design": ".pgf/DESIGN-Attestra.md",
   "decomposed_designs": [".pgf/DESIGN-AttestraPacks.md"],
   "pgxf_index": ".pgxf/INDEX-Attestra.json",
-  "summary": {"total": 38, "done": 36, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
+  "summary": {"total": 39, "done": 37, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
   "nodes": {
     "Attestra": "in-progress",
     "AttestraCore": "done",
@@ -17,6 +17,7 @@
     "AttestraCore.Fingerprint": "done",
     "AttestraCore.Provenance": "done",
     "AttestraCore.Attestation": "done",
+    "AttestraCore.AttestationLedger": "done",
     "AttestraCore.SchemaGate": "done",
     "AttestraCore.Determinism": "done",
     "PackContract": "done",
@@ -48,8 +49,9 @@
     "Tests": "done"
   },
   "verify": {
-    "unittests": "python -m unittest discover -s tests: Ran 56 tests OK",
-    "determinism": "cli.py determinism -> clean=True, 26 files scanned (attestra_core + attestra_packs, 0 clock/network/random)",
+    "unittests": "python -m unittest discover -s tests: Ran 64 tests OK",
+    "determinism": "cli.py determinism -> clean=True, 27 files scanned (attestra_core + attestra_packs, 0 clock/network/random)",
+    "attestation_lifecycle": "issue -> verify -> revoke. verify_attestation recomputes attestation_id from body (tamper detection: id_ok) + checks revocation. attestation_ledger.py = hash-chain issue/revoke events (verdict-ledger discipline, record_hash time-independent, tamper-evident). CLI verify-attestation / revoke-attestation; attest/audit gain --att-ledger. Smoke: issue idx0 -> verify valid -> revoke -> verify invalid (reason=revoked, id_ok still true), exit 1.",
     "closed_audit_loop": "attestra_audit.run_audit + `attestra audit <dir>`: batch ingest -> route (override/pack-field/filename) -> verdict -> attest non-breach -> single hash-chain ledger -> verify. Smoke: 12 packets across 4 packs -> 4 valid/4 thin/4 breach, 8 attestations, chain valid 12 records, exit 1 on breach. Idempotent (fresh ledger, record_hash time-independent).",
     "schema_enforcement": "per-pack packet_schema loaded by loader (10/10, 0 errors); run_gates enforces structural schema before predicates -> schema_violation breach on missing section / wrong type; all pack samples conform to their schema; validated via CLI (malformed -> breach with schema_errors)",
     "reference_pack_parity": "HandbackPack valid/thin/breach samples -> valid/thin/breach (matches ActionHandbackVerifier); trace-digest tamper -> breach",
@@ -73,5 +75,5 @@
   "known_deferrals": {
     "Docs": "README.md written; ARCHITECTURE.md / PACK-CONTRACT.md / DETERMINISM.md not yet written (in-progress)"
   },
-  "next": "HELIX loop integration (thin adapter calling attestra audit) OR PACK-CONTRACT.md — see report"
+  "next": "HELIX loop integration (thin adapter calling attestra audit, emitting verifiable attestations) OR PACK-CONTRACT.md — see report"
 }

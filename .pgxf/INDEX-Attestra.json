@@ -44,6 +44,7 @@
         "Fingerprint",
         "Provenance",
         "Attestation",
+        "AttestationLedger",
         "SchemaGate",
         "Determinism"
       ],
@@ -682,11 +683,30 @@
       "tags": [
         "audit"
       ]
+    },
+    "AttestationLedger": {
+      "node": "AttestationLedger",
+      "status": "done",
+      "file": ".pgf/DESIGN-Attestra.md",
+      "line": 60,
+      "depth": 2,
+      "parent": "AttestraCore",
+      "children": [],
+      "deps": [
+        "Attestation"
+      ],
+      "has_ppr": true,
+      "ppr_file": ".pgf/DESIGN-Attestra.md",
+      "ppr_line": 250,
+      "decomposed_to": null,
+      "tags": [
+        "core"
+      ]
     }
   },
   "summary": {
-    "total": 38,
-    "done": 36,
+    "total": 39,
+    "done": 37,
     "in-progress": 2,
     "designing": 0,
     "decomposed": 1,

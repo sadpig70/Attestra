@@ -25,3 +25,29 @@ def issue_attestation(result, chain=None, now=""):
     body["attestation_id"] = "ATT-" + sha256(canonical_json(body))[:16]
     body["issued_at"] = now  # metadata — excluded from id digest above
     return body
+
+
+def recompute_attestation_id(attestation):
+    """Recompute the id from the body (excluding id + issued_at) — same rule as issue."""
+    body = {k: v for k, v in attestation.items() if k not in ("attestation_id", "issued_at")}
+    return "ATT-" + sha256(canonical_json(body))[:16]
+
+
+def verify_attestation(attestation, revoked=None):
+    """Independently verify an issued attestation: id binds body AND not revoked.
+
+    revoked is a set of revoked attestation_ids (e.g. from the attestation ledger).
+    """
+    revoked = revoked or set()
+    expected = recompute_attestation_id(attestation)
+    got = attestation.get("attestation_id")
+    id_ok = expected == got
+    is_revoked = got in revoked
+    if not id_ok:
+        reason = "attestation_id does not bind body (tampered)"
+    elif is_revoked:
+        reason = "attestation revoked"
+    else:
+        reason = ""
+    return {"valid": id_ok and not is_revoked, "id_ok": id_ok, "revoked": is_revoked,
+            "expected_id": expected, "attestation_id": got, "reason": reason}

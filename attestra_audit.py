@@ -15,6 +15,7 @@ import os
 from attestra_core.gate_runtime import run_gates
 from attestra_core.ledger import append_record, verify_ledger
 from attestra_core.attestation import issue_attestation
+from attestra_core.attestation_ledger import record_issue, verify_attestation_ledger
 from attestra_packs.loader import get_pack
 
 
@@ -40,10 +41,17 @@ def discover_packets(directory):
     return out
 
 
-def run_audit(directory, registry, ledger_path, now="", attest_out=None, pack_override=None):
-    """Batch audit a directory. Rewrites its own ledger fresh so re-runs are idempotent."""
+def run_audit(directory, registry, ledger_path, now="", attest_out=None, pack_override=None,
+              att_ledger=None):
+    """Batch audit a directory. Rewrites its own ledgers fresh so re-runs are idempotent.
+
+    When att_ledger is given, every issued attestation is recorded as an issue event
+    into that hash-chained attestation ledger (verifiable/revocable afterward).
+    """
     if os.path.exists(ledger_path):
         os.remove(ledger_path)  # audit owns this ledger; fresh each run
+    if att_ledger and os.path.exists(att_ledger):
+        os.remove(att_ledger)
     if attest_out:
         os.makedirs(attest_out, exist_ok=True)
 
@@ -79,18 +87,20 @@ def run_audit(directory, registry, ledger_path, now="", attest_out=None, pack_ov
         if result["verdict"] != "breach":
             att = issue_attestation(
                 result, chain={"pack": pack_name, "source_project": pack.get("source_project")}, now=now)
-            if attest_out and att:
+            if att and attest_out:
                 with open(os.path.join(attest_out, f"{att['attestation_id']}.json"),
                           "w", encoding="utf-8") as f:
                     json.dump(att, f, ensure_ascii=False, indent=2, sort_keys=True)
                     f.write("\n")
+            if att and att_ledger:
+                record_issue(att_ledger, att, now=now)
         entries.append({
             "file": fname, "pack": pack_name, "subject": result["subject"],
             "verdict": result["verdict"], "ledger_index": record["index"],
             "attestation_id": att["attestation_id"] if att else None,
         })
 
-    return {
+    report = {
         "directory": directory, "ledger": ledger_path,
         "packets_seen": len(packets), "processed": len(entries),
         "by_verdict": by_verdict, "by_pack": by_pack,
@@ -98,6 +108,10 @@ def run_audit(directory, registry, ledger_path, now="", attest_out=None, pack_ov
         "attestations_issued": sum(1 for e in entries if e["attestation_id"]),
         "entries": entries,
     }
+    if att_ledger:
+        report["att_ledger"] = att_ledger
+        report["att_chain"] = verify_attestation_ledger(att_ledger)
+    return report
 
 
 def render_audit_markdown(report):

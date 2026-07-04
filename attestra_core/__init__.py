@@ -16,7 +16,10 @@ from .ledger import (
 )
 from .fingerprint import normalize, tokenize, fingerprint, fingerprint_pack
 from .provenance import trace_provenance, digest_checks
-from .attestation import issue_attestation
+from .attestation import issue_attestation, verify_attestation, recompute_attestation_id
+from .attestation_ledger import (
+    record_issue, record_revoke, revoked_ids, verify_attestation_ledger, list_events,
+)
 from .schema import validate_against_schema, load_schema
 
 __all__ = [
@@ -25,6 +28,8 @@ __all__ = [
     "run_gates",
     "canonical_json", "sha256", "append_record", "build_record", "verify_ledger", "last_record_hash",
     "normalize", "tokenize", "fingerprint", "fingerprint_pack",
-    "trace_provenance", "digest_checks", "issue_attestation",
+    "trace_provenance", "digest_checks",
+    "issue_attestation", "verify_attestation", "recompute_attestation_id",
+    "record_issue", "record_revoke", "revoked_ids", "verify_attestation_ledger", "list_events",
     "validate_against_schema", "load_schema",
 ]
