@@ -84,8 +84,7 @@
   "resolved": {
     "packet_schema_enforcement": "CLOSED 2026-07-05 — added attestra_core/schema.py (stdlib mini validator) + 10 schemas/packet-*.schema.json; loader loads+errors-on-missing; run_gates enforces before predicates; 8 new tests"
   },
-  "known_deferrals": {
-    "Docs": "README.md written; ARCHITECTURE.md / PACK-CONTRACT.md / DETERMINISM.md not yet written (in-progress)"
-  },
-  "next": "HELIX loop integration (thin adapter calling attestra audit, emitting verifiable attestations) OR PACK-CONTRACT.md — see report"
+  "known_deferrals": {},
+  "roadmap": ".pgf/WORKPLAN-Attestra-Roadmap.md — R1 bridge done, R2 docs done, R3 release-ready in-progress, R4 publish blocked (user-gated)",
+  "next": "roadmap R3_ReleaseReady (verify --att-ledger CLI gap, scripts/smoke.sh, CHANGELOG, final verify)"
 }
