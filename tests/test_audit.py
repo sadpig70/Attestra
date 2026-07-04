@@ -65,9 +65,11 @@ class TestAudit(unittest.TestCase):
             self._write(d, "gen-cert", "valid")
             ledger = os.path.join(d, "l.jsonl")
             run_audit(d, self.reg, ledger, now="T")
-            bytes1 = open(ledger, "r", encoding="utf-8").read()
+            with open(ledger, "r", encoding="utf-8") as f:
+                bytes1 = f.read()
             run_audit(d, self.reg, ledger, now="T")  # fresh rebuild, same now
-            bytes2 = open(ledger, "r", encoding="utf-8").read()
+            with open(ledger, "r", encoding="utf-8") as f:
+                bytes2 = f.read()
             self.assertEqual(bytes1, bytes2)
 
     def test_record_hash_time_independent_across_runs(self):
@@ -75,9 +77,11 @@ class TestAudit(unittest.TestCase):
             self._write(d, "handback", "valid")
             ledger = os.path.join(d, "l.jsonl")
             run_audit(d, self.reg, ledger, now="AAA")
-            h1 = [json.loads(x)["record_hash"] for x in open(ledger, encoding="utf-8")]
+            with open(ledger, encoding="utf-8") as f:
+                h1 = [json.loads(x)["record_hash"] for x in f]
             run_audit(d, self.reg, ledger, now="ZZZ")
-            h2 = [json.loads(x)["record_hash"] for x in open(ledger, encoding="utf-8")]
+            with open(ledger, encoding="utf-8") as f:
+                h2 = [json.loads(x)["record_hash"] for x in f]
             self.assertEqual(h1, h2)  # now is metadata, excluded from record_hash
 
 

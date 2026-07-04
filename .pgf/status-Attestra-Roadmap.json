@@ -4,12 +4,12 @@
   "workplan": ".pgf/WORKPLAN-Attestra-Roadmap.md",
   "purpose": "anti-drift governance plan for remaining Attestra work; each phase gated",
   "baseline": "kernel + 13 packs (3 clusters) + schema + pipeline + closed audit loop + attestation lifecycle; 64 tests green, determinism clean (27 files), 39 build-nodes done",
-  "current_phase": "R3_ReleaseReady",
+  "current_phase": "R4_Publish",
   "summary": {
     "total": 16,
-    "done": 10,
-    "in-progress": 1,
-    "designing": 4,
+    "done": 15,
+    "in-progress": 0,
+    "designing": 0,
     "blocked": 1
   },
   "phases": {
@@ -22,8 +22,8 @@
       "gate": "PASSED 2026-07-05 — 3 docs written; test_docs.py asserts doc/code consistency; PACK-CONTRACT example pack loads+runs valid/thin/breach from the doc alone; determinism stays clean; 75 tests green"
     },
     "R3_ReleaseReady": {
-      "status": "in-progress",
-      "gate": "verify --att-ledger works; smoke.sh passes; determinism clean; unittest green"
+      "status": "done",
+      "gate": "PASSED 2026-07-05 — verify --att-ledger CLI works (+ exit codes); scripts/smoke.sh all 6 steps pass (SMOKE OK); determinism clean; 78 tests green (ResourceWarnings fixed); CHANGELOG 0.1.0"
     },
     "R4_Publish": {
       "status": "blocked",
@@ -41,12 +41,12 @@
     "R2.ArchitectureDoc": "done",
     "R2.PackContractDoc": "done",
     "R2.DeterminismDoc": "done",
-    "R3_ReleaseReady": "in-progress",
-    "R3.AttLedgerCLIVerify": "designing",
-    "R3.SmokeScript": "designing",
-    "R3.Changelog": "designing",
-    "R3.FinalVerify": "designing",
+    "R3_ReleaseReady": "done",
+    "R3.AttLedgerCLIVerify": "done",
+    "R3.SmokeScript": "done",
+    "R3.Changelog": "done",
+    "R3.FinalVerify": "done",
     "R4_Publish": "blocked"
   },
-  "next": "execute R3_ReleaseReady per plan (verify --att-ledger CLI gap, scripts/smoke.sh, CHANGELOG, final verify)"
+  "next": "R4_Publish is user-gated (blocked): gh auth + create github.com/sadpig70/Attestra + push. Awaiting explicit approval."
 }

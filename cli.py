@@ -105,8 +105,12 @@ def cmd_revoke_attestation(args, _registry):
 
 
 def cmd_verify(args, _registry):
-    _dump(verify_ledger(args.ledger))
-    return 0
+    if args.att_ledger:
+        report = verify_attestation_ledger(args.att_ledger)
+    else:
+        report = verify_ledger(args.ledger)
+    _dump(report)
+    return 0 if report["valid"] else 1
 
 
 def cmd_report(args, registry):
@@ -221,8 +225,10 @@ def build_parser():
     s.add_argument("--ledger", required=True)
     s.add_argument("--reason", help="revocation reason")
 
-    s = sub.add_parser("verify", parents=[common], help="verify a ledger's hash chain")
-    s.add_argument("--ledger", required=True)
+    s = sub.add_parser("verify", parents=[common],
+                       help="verify a ledger's hash chain (verdict ledger or --att-ledger)")
+    s.add_argument("--ledger", help="verdict ledger to verify")
+    s.add_argument("--att-ledger", dest="att_ledger", help="attestation event ledger to verify")
 
     s = sub.add_parser("report", parents=[common], help="render a markdown verdict report")
     s.add_argument("--pack", required=True)
@@ -264,6 +270,9 @@ def main(argv=None):
     }
     if args.cmd == "run" and not args.pack and not args.pipeline:
         print("run requires --pack or --pipeline", file=sys.stderr)
+        return 2
+    if args.cmd == "verify" and not args.ledger and not args.att_ledger:
+        print("verify requires --ledger or --att-ledger", file=sys.stderr)
         return 2
     return dispatch[args.cmd](args, registry)
 

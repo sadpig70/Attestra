@@ -84,6 +84,33 @@ class TestAttestationLedger(unittest.TestCase):
             self.assertEqual(r1["record_hash"], r2["record_hash"])
 
 
+class TestVerifyCLI(unittest.TestCase):
+    def test_verify_att_ledger_cli_valid(self):
+        import cli
+        with tempfile.TemporaryDirectory() as d:
+            ledger = os.path.join(d, "a.jsonl")
+            record_issue(ledger, issue_attestation(VALID_RESULT, now="T"), now="T1")
+            self.assertEqual(cli.main(["verify", "--att-ledger", ledger]), 0)
+
+    def test_verify_att_ledger_cli_detects_tamper(self):
+        import cli
+        with tempfile.TemporaryDirectory() as d:
+            ledger = os.path.join(d, "a.jsonl")
+            att = issue_attestation(VALID_RESULT, now="T")
+            record_issue(ledger, att, now="T1")
+            record_revoke(ledger, att["attestation_id"], reason="x", now="T2")
+            with open(ledger, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+            lines[0] = lines[0].replace('"issue"', '"revoke"')
+            with open(ledger, "w", encoding="utf-8") as f:
+                f.writelines(lines)
+            self.assertEqual(cli.main(["verify", "--att-ledger", ledger]), 1)
+
+    def test_verify_requires_a_ledger(self):
+        import cli
+        self.assertEqual(cli.main(["verify"]), 2)
+
+
 class TestThinAlsoIssuable(unittest.TestCase):
     def test_thin_conditional_attestation_verifies(self):
         att = issue_attestation({"verdict": "thin", "subject": "S2", "pack": "gen-cert",
