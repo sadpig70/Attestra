@@ -12,6 +12,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXPECTED_PACKS = {
     "handback", "spend-boundary", "veto-escrow", "delegation", "withheld-action",
     "policy-drift", "custody-relay", "slot-gate", "context-boundary", "action-governance",
+    "repro-dossier", "gen-cert",  # second wave: provenance/trust cluster
 }
 
 
@@ -19,7 +20,7 @@ class TestRegistry(unittest.TestCase):
     def setUp(self):
         self.registry = load_packs()
 
-    def test_all_first_wave_packs_loaded(self):
+    def test_all_packs_loaded(self):
         self.assertEqual(set(self.registry["packs"]), EXPECTED_PACKS)
 
     def test_no_load_errors(self):

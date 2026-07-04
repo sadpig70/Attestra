@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-gencert.schema.json",
+  "title": "GenCert packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "gencert"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "gencert": {"type": "object", "properties": {
+      "cert_id": {"type": "string"},
+      "generator_id": {"type": "string"},
+      "revoked": {"type": "boolean"},
+      "artifact_generator_id": {"type": "string"},
+      "artifact_type": {"type": "string"},
+      "certified_scope": {"type": "array", "items": {"type": "string"}}}}
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-repro.schema.json",
+  "title": "Repro-dossier packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "repro"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "repro": {"type": "object", "required": ["builds"], "properties": {
+      "builds": {"type": "array", "items": {"type": "object", "properties": {
+        "build_id": {"type": "string"},
+        "output_hash": {"type": "string"},
+        "provenance": {"type": "string"}}}},
+      "required_agree": {"type": "integer", "minimum": 0}}}
+  }
+}

@@ -21,7 +21,12 @@ AttestraPacks // 1차 도메인 팩 (governance·trust cluster) (designing) @v:0
     SlotGatePack // 타임박스 실행 슬롯 재인가 (designing)
     ContextBoundaryPack // cross-scope 컨텍스트 공격경로 랭킹 (designing)
     ActionGovernancePack // pre/in-flight/post 행위 판정 (designing)
+    ReproDossierPack // (2차·provenance) 출력해시 일치 재현성 증명 (done)
+    GenCertPack // (2차·provenance) 생성기 1회 인증→신뢰 상속 (done)
 ```
+
+> ReproDossierPack·GenCertPack은 **provenance/trust 서브클러스터**(거버넌스와 다른 계열) 팩으로,
+> **커널 무수정**(매니페스트+predicate+스키마만)으로 등록됨 — PackContract 일반성 증명.
 
 > depth ≤ 2 유지 — 팩 predicate 상세는 각 노드 아래 간략 PPR(`#`)로 기술. 커널 계약이 이미
 > `predicate(packet, P) -> CheckResult`를 고정하므로 팩은 predicate 목록 + verdict 규칙만 명세하면 된다.

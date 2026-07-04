@@ -306,7 +306,9 @@
         "CustodyRelayPack",
         "SlotGatePack",
         "ContextBoundaryPack",
-        "ActionGovernancePack"
+        "ActionGovernancePack",
+        "ReproDossierPack",
+        "GenCertPack"
       ],
       "deps": [
         "PackContract"
@@ -607,11 +609,45 @@
       "tags": [
         "core"
       ]
+    },
+    "ReproDossierPack": {
+      "node": "ReproDossierPack",
+      "status": "done",
+      "file": ".pgf/DESIGN-AttestraPacks.md",
+      "line": 24,
+      "depth": 2,
+      "parent": "Packs",
+      "children": [],
+      "deps": [
+        "HandbackPack"
+      ],
+      "has_ppr": false,
+      "decomposed_to": null,
+      "tags": [
+        "packs"
+      ]
+    },
+    "GenCertPack": {
+      "node": "GenCertPack",
+      "status": "done",
+      "file": ".pgf/DESIGN-AttestraPacks.md",
+      "line": 25,
+      "depth": 2,
+      "parent": "Packs",
+      "children": [],
+      "deps": [
+        "HandbackPack"
+      ],
+      "has_ppr": false,
+      "decomposed_to": null,
+      "tags": [
+        "packs"
+      ]
     }
   },
   "summary": {
-    "total": 34,
-    "done": 32,
+    "total": 36,
+    "done": 34,
     "in-progress": 2,
     "designing": 0,
     "decomposed": 1,

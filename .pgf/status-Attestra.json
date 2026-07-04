@@ -6,7 +6,7 @@
   "design": ".pgf/DESIGN-Attestra.md",
   "decomposed_designs": [".pgf/DESIGN-AttestraPacks.md"],
   "pgxf_index": ".pgxf/INDEX-Attestra.json",
-  "summary": {"total": 34, "done": 32, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
+  "summary": {"total": 36, "done": 34, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
   "nodes": {
     "Attestra": "in-progress",
     "AttestraCore": "done",
@@ -35,6 +35,8 @@
     "AttestraPacks.SlotGatePack": "done",
     "AttestraPacks.ContextBoundaryPack": "done",
     "AttestraPacks.ActionGovernancePack": "done",
+    "AttestraPacks.ReproDossierPack": "done",
+    "AttestraPacks.GenCertPack": "done",
     "Pipeline": "done",
     "Pipeline.Compose": "done",
     "Pipeline.Aggregate": "done",
@@ -44,14 +46,15 @@
     "Tests": "done"
   },
   "verify": {
-    "unittests": "python -m unittest discover -s tests: Ran 41 tests OK",
-    "determinism": "cli.py determinism -> clean=True, 23 files scanned (attestra_core + attestra_packs, 0 clock/network/random)",
+    "unittests": "python -m unittest discover -s tests: Ran 45 tests OK",
+    "determinism": "cli.py determinism -> clean=True, 25 files scanned (attestra_core + attestra_packs, 0 clock/network/random)",
     "schema_enforcement": "per-pack packet_schema loaded by loader (10/10, 0 errors); run_gates enforces structural schema before predicates -> schema_violation breach on missing section / wrong type; all pack samples conform to their schema; validated via CLI (malformed -> breach with schema_errors)",
     "reference_pack_parity": "HandbackPack valid/thin/breach samples -> valid/thin/breach (matches ActionHandbackVerifier); trace-digest tamper -> breach",
     "pipeline_generalizes": "run_pipeline over [spend-boundary, context-boundary, veto-escrow] reproduces SpendBoundary-style composition; one breach -> pipeline breach (worst_pack surfaced)",
     "ledger": "hash-chain append + verify valid; tamper detected; record_hash time-independent (now excluded)",
     "attestation": "valid->full, thin->conditional, breach->refused(None); attestation_id idempotent",
-    "pack_registry": "10 first-wave packs loaded, 0 dropped, 0 errors; dedup by fingerprint proven in unit test",
+    "pack_registry": "12 packs loaded (10 first-wave governance + 2 second-wave provenance/trust), 0 dropped, 0 errors; dedup by fingerprint proven in unit test",
+    "contract_generalization": "ReproDossier + GenCert (provenance/trust cluster) added with ZERO kernel change (git diff attestra_core/ empty) — proves PackContract generalizes beyond agent-action governance. Cross-cluster pipeline (action-governance + gen-cert) aggregates correctly.",
     "cli_smoke": "sample/run/verify/report/attest/pack/determinism all exercised; breach run exit code 1",
     "perspectives": {
       "acceptance": "SingleSourceKernel / PackContractStable / ReferencePackPorted / PipelineGeneralizes / DeterministicCore / Federated / AttestationIssued / Tested all met",
@@ -66,5 +69,5 @@
   "known_deferrals": {
     "Docs": "README.md written; ARCHITECTURE.md / PACK-CONTRACT.md / DETERMINISM.md not yet written (in-progress)"
   },
-  "next": "second-wave pack expansion OR HELIX loop integration — see report"
+  "next": "clearing vertical (PackContract extension for bid-pool -> clearing) OR HELIX loop integration — see report"
 }
