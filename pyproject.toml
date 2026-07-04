@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "attestra"
+version = "0.1.0"
+description = "Deterministic verdict/attestation platform — one kernel + N domain packs"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Jung Wook Yang", email = "sadpig70@gmail.com"}]
+dependencies = []
+
+[project.scripts]
+attestra = "cli:main"
+
+[tool.setuptools]
+py-modules = ["cli", "attestra_pipeline"]
+packages = ["attestra_core", "attestra_packs"]

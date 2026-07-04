@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/ledger.schema.json",
+  "title": "Attestra ledger record (one JSONL line)",
+  "type": "object",
+  "properties": {
+    "index": {"type": "integer", "minimum": 0},
+    "subject": {"type": "string"},
+    "pack": {"type": "string"},
+    "verdict": {"type": "string", "enum": ["valid", "thin", "breach"]},
+    "result_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "prev_hash": {"type": "string"},
+    "record_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "recorded_at": {"type": "string"}
+  },
+  "required": ["index", "verdict", "result_hash", "prev_hash", "record_hash"]
+}

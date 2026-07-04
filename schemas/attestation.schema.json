@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/attestation.schema.json",
+  "title": "Attestra attestation (issued warrant)",
+  "type": "object",
+  "properties": {
+    "attestation_id": {"type": "string", "pattern": "^ATT-[0-9a-f]{16}$"},
+    "subject": {"type": "string"},
+    "pack": {"type": ["string", "null"]},
+    "verdict": {"type": "string", "enum": ["valid", "thin"]},
+    "grade": {"type": "string", "enum": ["full", "conditional"]},
+    "checks_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "provenance": {"type": "object"},
+    "issued_at": {"type": "string"}
+  },
+  "required": ["attestation_id", "subject", "verdict", "grade", "checks_digest", "provenance"]
+}

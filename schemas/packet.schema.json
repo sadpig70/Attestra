@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet.schema.json",
+  "title": "Attestra evidence packet (base)",
+  "description": "Public evidence packet. Pack-specific sections extend this. Private payload fields are forbidden.",
+  "type": "object",
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "packet_time": {"type": "string"},
+    "pack": {"type": "string"}
+  },
+  "anyOf": [
+    {"required": ["packet_id"]},
+    {"required": ["subject"]}
+  ],
+  "not": {
+    "anyOf": [
+      {"required": ["payload"]},
+      {"required": ["private_payload"]},
+      {"required": ["raw_payload"]},
+      {"required": ["secret"]},
+      {"required": ["secrets"]},
+      {"required": ["credential"]},
+      {"required": ["credentials"]}
+    ]
+  }
+}

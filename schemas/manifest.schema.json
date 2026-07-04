@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/manifest.schema.json",
+  "title": "Attestra pack manifest",
+  "type": "object",
+  "properties": {
+    "name": {"type": "string"},
+    "version": {"type": "string"},
+    "predicates": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "packet_schema": {"type": "string"},
+    "source_project": {"type": "string"},
+    "id_field": {"type": "string"}
+  },
+  "required": ["name", "version", "predicates", "packet_schema", "source_project"]
+}
