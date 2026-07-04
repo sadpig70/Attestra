@@ -70,6 +70,7 @@ Attestra // 결정론 attestation/verdict 플랫폼 (designing) @v:0.1
         Compose // 여러 팩을 한 패킷에 순차 적용 (designing) #pipeline
         Aggregate // 팩 간 verdict 집계 (highest severity) (designing) @dep:Compose #pipeline
     Audit // 닫힌 감사 루프 배치 러너 (ingest→route→verdict→attest→ledger→verify) (done) @dep:Pipeline,Attestation #audit
+    HelixBridge // HELIX corpus handback 산출물 증언 (read-only 어댑터) (done) @dep:Audit,AttestationLedger #bridge
     CLI // sample/run/verify/report/attest/pack/audit/determinism (designing) @dep:AttestraCore,PackRegistry #cli
     Schemas // JSON Schema (packet/verdict/ledger/attestation/manifest) (designing) #schema
     Docs // README/ARCHITECTURE/PACK-CONTRACT/DETERMINISM (designing) #docs

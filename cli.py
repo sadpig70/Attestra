@@ -20,6 +20,7 @@ from attestra_core.determinism import check_tree
 from attestra_packs.loader import load_packs, get_pack
 from attestra_pipeline import run_pipeline
 from attestra_audit import run_audit, render_audit_markdown
+from attestra_helix import helix_audit, render_helix_markdown
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -148,6 +149,19 @@ def cmd_audit(args, registry):
     return 1 if report["by_verdict"]["breach"] > 0 else 0  # policy failure vs all-clear
 
 
+def cmd_helix_audit(args, registry):
+    ledger = args.ledger or "helix-audit-ledger.jsonl"
+    report = helix_audit(args.helix_root, registry, ledger, now=args.now,
+                         att_ledger=args.att_ledger, attest_out=args.attest_out)
+    if args.report:
+        with open(args.report, "w", encoding="utf-8") as f:
+            f.write(render_helix_markdown(report))
+    _dump(report)
+    if not report["chain"]["valid"]:
+        return 2
+    return 1 if report["by_verdict"]["breach"] > 0 else 0
+
+
 def cmd_determinism(_args, _registry):
     report = check_tree(ROOT)
     _dump(report)
@@ -227,6 +241,14 @@ def build_parser():
     s.add_argument("--pack", help="force every packet through this pack")
     s.add_argument("--report", help="write a markdown summary to this path")
 
+    s = sub.add_parser("helix-audit", parents=[common],
+                       help="attest a HELIX root's handback packets (read-only bridge)")
+    s.add_argument("--helix-root", dest="helix_root", required=True)
+    s.add_argument("--ledger", help="verdict ledger path (default helix-audit-ledger.jsonl)")
+    s.add_argument("--att-ledger", dest="att_ledger", help="attestation event ledger path")
+    s.add_argument("--attest-out", dest="attest_out", help="dir to write issued attestations")
+    s.add_argument("--report", help="write a markdown summary to this path")
+
     sub.add_parser("determinism", parents=[common], help="scan kernel+packs for boundary violations")
     return p
 
@@ -237,7 +259,8 @@ def main(argv=None):
     dispatch = {
         "sample": cmd_sample, "run": cmd_run, "attest": cmd_attest, "verify": cmd_verify,
         "verify-attestation": cmd_verify_attestation, "revoke-attestation": cmd_revoke_attestation,
-        "report": cmd_report, "pack": cmd_pack, "audit": cmd_audit, "determinism": cmd_determinism,
+        "report": cmd_report, "pack": cmd_pack, "audit": cmd_audit,
+        "helix-audit": cmd_helix_audit, "determinism": cmd_determinism,
     }
     if args.cmd == "run" and not args.pack and not args.pipeline:
         print("run requires --pack or --pipeline", file=sys.stderr)

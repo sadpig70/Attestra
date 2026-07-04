@@ -3,7 +3,8 @@
   "files": [
     ".pgf/DESIGN-Attestra.md",
     ".pgf/DESIGN-AttestraPacks.md",
-    ".pgf/WORKPLAN-Attestra.md"
+    ".pgf/WORKPLAN-Attestra.md",
+    ".pgf/WORKPLAN-Attestra-Roadmap.md"
   ],
   "nodes": {
     "Attestra": {
@@ -19,6 +20,7 @@
         "Packs",
         "Pipeline",
         "Audit",
+        "HelixBridge",
         "CLI",
         "Schemas",
         "Docs",
@@ -702,11 +704,29 @@
       "tags": [
         "core"
       ]
+    },
+    "HelixBridge": {
+      "node": "HelixBridge",
+      "status": "done",
+      "file": ".pgf/DESIGN-Attestra.md",
+      "line": 69,
+      "depth": 1,
+      "parent": "Attestra",
+      "children": [],
+      "deps": [
+        "Audit",
+        "AttestationLedger"
+      ],
+      "has_ppr": false,
+      "decomposed_to": null,
+      "tags": [
+        "bridge"
+      ]
     }
   },
   "summary": {
-    "total": 39,
-    "done": 37,
+    "total": 40,
+    "done": 38,
     "in-progress": 2,
     "designing": 0,
     "decomposed": 1,

@@ -1,0 +1,34 @@
+{
+  "project": "Attestra-Roadmap",
+  "version": "0.1",
+  "workplan": ".pgf/WORKPLAN-Attestra-Roadmap.md",
+  "purpose": "anti-drift governance plan for remaining Attestra work; each phase gated",
+  "baseline": "kernel + 13 packs (3 clusters) + schema + pipeline + closed audit loop + attestation lifecycle; 64 tests green, determinism clean (27 files), 39 build-nodes done",
+  "current_phase": "R2_Docs",
+  "summary": {"total": 16, "done": 6, "in-progress": 1, "designing": 8, "blocked": 1},
+  "phases": {
+    "R1_HelixBridge": {"status": "done", "gate": "PASSED 2026-07-05 — attested real D:/HELIX HB-VALID-001 -> valid + issued attestation verifies + helix_root file count unchanged (read-only) + zero kernel change (git diff attestra_core/ empty) + 69 tests green"},
+    "R2_Docs": {"status": "in-progress", "gate": "ARCHITECTURE/PACK-CONTRACT/DETERMINISM match code; third-party can author a pack"},
+    "R3_ReleaseReady": {"status": "designing", "gate": "verify --att-ledger works; smoke.sh passes; determinism clean; unittest green"},
+    "R4_Publish": {"status": "blocked", "gate": "user-gated: gh auth + remote create + push"}
+  },
+  "nodes": {
+    "R1_HelixBridge": "done",
+    "R1.BridgeIngest": "done",
+    "R1.BridgeMap": "done",
+    "R1.BridgeAudit": "done",
+    "R1.BridgeCLI": "done",
+    "R1.BridgeTests": "done",
+    "R2_Docs": "in-progress",
+    "R2.ArchitectureDoc": "designing",
+    "R2.PackContractDoc": "designing",
+    "R2.DeterminismDoc": "designing",
+    "R3_ReleaseReady": "designing",
+    "R3.AttLedgerCLIVerify": "designing",
+    "R3.SmokeScript": "designing",
+    "R3.Changelog": "designing",
+    "R3.FinalVerify": "designing",
+    "R4_Publish": "blocked"
+  },
+  "next": "execute R2_Docs per plan (ARCHITECTURE.md, PACK-CONTRACT.md, DETERMINISM.md)"
+}
