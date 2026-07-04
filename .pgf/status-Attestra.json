@@ -4,9 +4,18 @@
   "phase": "verify",
   "workplan": ".pgf/WORKPLAN-Attestra.md",
   "design": ".pgf/DESIGN-Attestra.md",
-  "decomposed_designs": [".pgf/DESIGN-AttestraPacks.md"],
+  "decomposed_designs": [
+    ".pgf/DESIGN-AttestraPacks.md"
+  ],
   "pgxf_index": ".pgxf/INDEX-Attestra.json",
-  "summary": {"total": 40, "done": 38, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
+  "summary": {
+    "total": 40,
+    "done": 38,
+    "in-progress": 1,
+    "designing": 0,
+    "decomposed": 1,
+    "blocked": 0
+  },
   "nodes": {
     "Attestra": "in-progress",
     "AttestraCore": "done",
@@ -46,7 +55,7 @@
     "HelixBridge": "done",
     "CLI": "done",
     "Schemas": "done",
-    "Docs": "in-progress",
+    "Docs": "done",
     "Tests": "done"
   },
   "verify": {
@@ -68,7 +77,8 @@
       "acceptance": "SingleSourceKernel / PackContractStable / ReferencePackPorted / PipelineGeneralizes / DeterministicCore / Federated / AttestationIssued / Tested all met",
       "quality": "verdict/ledger/attestation defined once in attestra_core; packs contribute predicates only (no kernel dup). loader stores manifest predicate strings + callables separately after fix",
       "architecture": "federate preserved — each pack tagged source_project github.com/sadpig70/*; kernel has zero pack imports"
-    }
+    },
+    "docs": "ARCHITECTURE.md + PACK-CONTRACT.md + DETERMINISM.md written (docs/); test_docs.py asserts docs match code (manifest keys, CheckResult keys, private fields, determinism terms); PACK-CONTRACT example pack verified to load+run valid/thin/breach from the doc alone (third-party extensibility gate). Docs node closed."
   },
   "determinism_boundary": "core+pack-predicates = pure stdlib (now/sim injected); hash excludes now/*_at meta; cli+pipeline = meta/IO layer (still clock-free, --now injected)",
   "resolved": {

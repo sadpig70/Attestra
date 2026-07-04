@@ -98,6 +98,12 @@ python cli.py audit --dir examples --attest-out examples/attestations --report e
 python cli.py pack list
 ```
 
+## 문서
+
+- 아키텍처: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — 커널·팩·경계·3클러스터 매핑
+- 팩 작성 규격: [`docs/PACK-CONTRACT.md`](docs/PACK-CONTRACT.md) — 외부 팩 작성법(예제 포함, 커널 무수정)
+- 결정론 경계: [`docs/DETERMINISM.md`](docs/DETERMINISM.md) — 재현성 계약 + 검사기
+
 ## 설계 문서
 
 - 메인 설계: [`.pgf/DESIGN-Attestra.md`](.pgf/DESIGN-Attestra.md) (Gantree + PPR 계약)
