@@ -16,6 +16,7 @@ from attestra_core.attestation import issue_attestation
 from attestra_core.determinism import check_tree
 from attestra_packs.loader import load_packs, get_pack
 from attestra_pipeline import run_pipeline
+from attestra_audit import run_audit, render_audit_markdown
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -111,6 +112,19 @@ def cmd_pack(args, registry):
     return 0
 
 
+def cmd_audit(args, registry):
+    ledger = args.ledger or os.path.join(args.dir, "audit-ledger.jsonl")
+    report = run_audit(args.dir, registry, ledger, now=args.now,
+                       attest_out=args.attest_out, pack_override=args.pack)
+    if args.report:
+        with open(args.report, "w", encoding="utf-8") as f:
+            f.write(render_audit_markdown(report))
+    _dump(report)
+    if not report["chain"]["valid"] or report["unroutable"]:
+        return 2  # operational failure
+    return 1 if report["by_verdict"]["breach"] > 0 else 0  # policy failure vs all-clear
+
+
 def cmd_determinism(_args, _registry):
     report = check_tree(ROOT)
     _dump(report)
@@ -169,6 +183,14 @@ def build_parser():
     sub.add_parser("pack", parents=[common], help="list loaded packs").add_argument(
         "list", nargs="?", help="(positional, optional)")
 
+    s = sub.add_parser("audit", parents=[common],
+                       help="batch-evaluate a directory of packets into one audit ledger")
+    s.add_argument("--dir", required=True)
+    s.add_argument("--ledger", help="audit ledger path (default <dir>/audit-ledger.jsonl)")
+    s.add_argument("--attest-out", dest="attest_out", help="dir to write issued attestations")
+    s.add_argument("--pack", help="force every packet through this pack")
+    s.add_argument("--report", help="write a markdown summary to this path")
+
     sub.add_parser("determinism", parents=[common], help="scan kernel+packs for boundary violations")
     return p
 
@@ -178,7 +200,7 @@ def main(argv=None):
     registry = load_packs()
     dispatch = {
         "sample": cmd_sample, "run": cmd_run, "attest": cmd_attest, "verify": cmd_verify,
-        "report": cmd_report, "pack": cmd_pack, "determinism": cmd_determinism,
+        "report": cmd_report, "pack": cmd_pack, "audit": cmd_audit, "determinism": cmd_determinism,
     }
     if args.cmd == "run" and not args.pack and not args.pipeline:
         print("run requires --pack or --pipeline", file=sys.stderr)

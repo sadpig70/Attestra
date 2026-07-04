@@ -6,7 +6,7 @@
   "design": ".pgf/DESIGN-Attestra.md",
   "decomposed_designs": [".pgf/DESIGN-AttestraPacks.md"],
   "pgxf_index": ".pgxf/INDEX-Attestra.json",
-  "summary": {"total": 37, "done": 35, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
+  "summary": {"total": 38, "done": 36, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
   "nodes": {
     "Attestra": "in-progress",
     "AttestraCore": "done",
@@ -41,14 +41,16 @@
     "Pipeline": "done",
     "Pipeline.Compose": "done",
     "Pipeline.Aggregate": "done",
+    "Audit": "done",
     "CLI": "done",
     "Schemas": "done",
     "Docs": "in-progress",
     "Tests": "done"
   },
   "verify": {
-    "unittests": "python -m unittest discover -s tests: Ran 51 tests OK",
+    "unittests": "python -m unittest discover -s tests: Ran 56 tests OK",
     "determinism": "cli.py determinism -> clean=True, 26 files scanned (attestra_core + attestra_packs, 0 clock/network/random)",
+    "closed_audit_loop": "attestra_audit.run_audit + `attestra audit <dir>`: batch ingest -> route (override/pack-field/filename) -> verdict -> attest non-breach -> single hash-chain ledger -> verify. Smoke: 12 packets across 4 packs -> 4 valid/4 thin/4 breach, 8 attestations, chain valid 12 records, exit 1 on breach. Idempotent (fresh ledger, record_hash time-independent).",
     "schema_enforcement": "per-pack packet_schema loaded by loader (10/10, 0 errors); run_gates enforces structural schema before predicates -> schema_violation breach on missing section / wrong type; all pack samples conform to their schema; validated via CLI (malformed -> breach with schema_errors)",
     "reference_pack_parity": "HandbackPack valid/thin/breach samples -> valid/thin/breach (matches ActionHandbackVerifier); trace-digest tamper -> breach",
     "pipeline_generalizes": "run_pipeline over [spend-boundary, context-boundary, veto-escrow] reproduces SpendBoundary-style composition; one breach -> pipeline breach (worst_pack surfaced)",
@@ -71,5 +73,5 @@
   "known_deferrals": {
     "Docs": "README.md written; ARCHITECTURE.md / PACK-CONTRACT.md / DETERMINISM.md not yet written (in-progress)"
   },
-  "next": "clearing vertical (PackContract extension for bid-pool -> clearing) OR HELIX loop integration — see report"
+  "next": "HELIX loop integration (thin adapter calling attestra audit) OR PACK-CONTRACT.md — see report"
 }

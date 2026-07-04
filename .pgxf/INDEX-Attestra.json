@@ -18,6 +18,7 @@
         "PackContract",
         "Packs",
         "Pipeline",
+        "Audit",
         "CLI",
         "Schemas",
         "Docs",
@@ -661,11 +662,31 @@
       "tags": [
         "packs"
       ]
+    },
+    "Audit": {
+      "node": "Audit",
+      "status": "done",
+      "file": ".pgf/DESIGN-Attestra.md",
+      "line": 68,
+      "depth": 1,
+      "parent": "Attestra",
+      "children": [],
+      "deps": [
+        "Pipeline",
+        "Attestation"
+      ],
+      "has_ppr": true,
+      "ppr_file": ".pgf/DESIGN-Attestra.md",
+      "ppr_line": 250,
+      "decomposed_to": null,
+      "tags": [
+        "audit"
+      ]
     }
   },
   "summary": {
-    "total": 37,
-    "done": 35,
+    "total": 38,
+    "done": 36,
     "in-progress": 2,
     "designing": 0,
     "decomposed": 1,

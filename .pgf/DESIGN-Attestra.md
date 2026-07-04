@@ -68,7 +68,8 @@ Attestra // 결정론 attestation/verdict 플랫폼 (designing) @v:0.1
     Pipeline // 다중 팩 합성 게이트 (SpendBoundary 일반화) (designing) @dep:PackContract #pipeline
         Compose // 여러 팩을 한 패킷에 순차 적용 (designing) #pipeline
         Aggregate // 팩 간 verdict 집계 (highest severity) (designing) @dep:Compose #pipeline
-    CLI // sample/run/verify/report/attest/pack/ledger (designing) @dep:AttestraCore,PackRegistry #cli
+    Audit // 닫힌 감사 루프 배치 러너 (ingest→route→verdict→attest→ledger→verify) (done) @dep:Pipeline,Attestation #audit
+    CLI // sample/run/verify/report/attest/pack/audit/determinism (designing) @dep:AttestraCore,PackRegistry #cli
     Schemas // JSON Schema (packet/verdict/ledger/attestation/manifest) (designing) #schema
     Docs // README/ARCHITECTURE/PACK-CONTRACT/DETERMINISM (designing) #docs
     Tests // 결정론 unittest (커널 + 팩 + 파이프라인) (designing) @dep:AttestraCore,Packs #test
@@ -271,6 +272,29 @@ def run_gates(packet, predicates, P, now, id_field, schema) -> dict:
     #   - 스키마 위반(타입 불일치·섹션 결측) → schema_violation breach, predicate 미실행
     #   - 구조 계약과 정책 계약 분리 (섹션 존재/타입=스키마, 증거 완전성/정책=predicate)
     #   - 결정론: stdlib 미니 검증기 (시계/네트워크/random 없음)
+```
+
+### 3.9 Audit — 닫힌 감사 루프 배치 러너 (운영 표면)
+
+```python
+def run_audit(directory, registry, ledger_path, now, attest_out, pack_override) -> dict:
+    """디렉토리의 모든 패킷을 팩으로 라우팅→평가→attestation→단일 hash-chain 원장→검증.
+       sample → audit → attest-all → verify 를 한 번에 닫는다. 파일 정렬순 = 결정론."""
+    reset_ledger(ledger_path)                          # audit가 소유하는 원장 (재실행 idempotent)
+    for path in sorted(glob_packets(directory)):       # 결정론 순서
+        packet = load(path)
+        pack = route(packet, path, override)           # override > packet["pack"] > 파일명 prefix
+        if pack is None: unroutable.append(path); continue
+        result = run_gates(packet, pack.predicate_fns, now, pack.id_field, pack.schema)
+        append_record(ledger_path, result, pack.name, now)          # 체인 적재
+        if result["verdict"] != "breach":
+            att = issue_attestation(result, now)        # 비-breach만 warrant 발행
+    return {by_verdict, by_pack, attestations_issued, unroutable, chain: verify_ledger(ledger_path), entries}
+    # acceptance_criteria:
+    #   - 파일 정렬순 처리 → 동일 입력·동일 now → 동일 원장 (record_hash는 now 무관)
+    #   - 라우팅 불가 패킷은 unroutable로 격리 (감사 흐름 중단 없음)
+    #   - 비-breach verdict마다 attestation 발행, breach는 발행 거부
+    #   - 종료코드: chain invalid/unroutable=2(운영 실패), breach 존재=1(정책 실패), 전부 통과=0
 ```
 
 ## 4. 결정론 경계 (지배 제약)
