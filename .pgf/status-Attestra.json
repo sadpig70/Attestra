@@ -6,7 +6,7 @@
   "design": ".pgf/DESIGN-Attestra.md",
   "decomposed_designs": [".pgf/DESIGN-AttestraPacks.md"],
   "pgxf_index": ".pgxf/INDEX-Attestra.json",
-  "summary": {"total": 36, "done": 34, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
+  "summary": {"total": 37, "done": 35, "in-progress": 1, "designing": 0, "decomposed": 1, "blocked": 0},
   "nodes": {
     "Attestra": "in-progress",
     "AttestraCore": "done",
@@ -37,6 +37,7 @@
     "AttestraPacks.ActionGovernancePack": "done",
     "AttestraPacks.ReproDossierPack": "done",
     "AttestraPacks.GenCertPack": "done",
+    "AttestraPacks.ReserveFlowPack": "done",
     "Pipeline": "done",
     "Pipeline.Compose": "done",
     "Pipeline.Aggregate": "done",
@@ -46,8 +47,8 @@
     "Tests": "done"
   },
   "verify": {
-    "unittests": "python -m unittest discover -s tests: Ran 45 tests OK",
-    "determinism": "cli.py determinism -> clean=True, 25 files scanned (attestra_core + attestra_packs, 0 clock/network/random)",
+    "unittests": "python -m unittest discover -s tests: Ran 51 tests OK",
+    "determinism": "cli.py determinism -> clean=True, 26 files scanned (attestra_core + attestra_packs, 0 clock/network/random)",
     "schema_enforcement": "per-pack packet_schema loaded by loader (10/10, 0 errors); run_gates enforces structural schema before predicates -> schema_violation breach on missing section / wrong type; all pack samples conform to their schema; validated via CLI (malformed -> breach with schema_errors)",
     "reference_pack_parity": "HandbackPack valid/thin/breach samples -> valid/thin/breach (matches ActionHandbackVerifier); trace-digest tamper -> breach",
     "pipeline_generalizes": "run_pipeline over [spend-boundary, context-boundary, veto-escrow] reproduces SpendBoundary-style composition; one breach -> pipeline breach (worst_pack surfaced)",
@@ -55,6 +56,7 @@
     "attestation": "valid->full, thin->conditional, breach->refused(None); attestation_id idempotent",
     "pack_registry": "12 packs loaded (10 first-wave governance + 2 second-wave provenance/trust), 0 dropped, 0 errors; dedup by fingerprint proven in unit test",
     "contract_generalization": "ReproDossier + GenCert (provenance/trust cluster) added with ZERO kernel change (git diff attestra_core/ empty) — proves PackContract generalizes beyond agent-action governance. Cross-cluster pipeline (action-governance + gen-cert) aggregates correctly.",
+    "clearing_probe_finding": "ReserveFlow (clearing/market cluster) added with ZERO kernel change. FINDING (ADR in DESIGN-AttestraPacks §4): packet->verdict contract COVERS clearing VERIFICATION (conservation/no_conflict/priority over a clearing-result packet; subject stays single = the clearing round; allocations are multi-party evidence). Clearing COMPUTATION (matching engine) is OUT of scope — produces the packet, lives in source project, same status as declared out-of-boundary domain stages. DECISION: no ClearingContract extension needed; Attestra stays a pure verdict/attestation platform spanning 3 structurally-distinct clusters.",
     "cli_smoke": "sample/run/verify/report/attest/pack/determinism all exercised; breach run exit code 1",
     "perspectives": {
       "acceptance": "SingleSourceKernel / PackContractStable / ReferencePackPorted / PipelineGeneralizes / DeterministicCore / Federated / AttestationIssued / Tested all met",

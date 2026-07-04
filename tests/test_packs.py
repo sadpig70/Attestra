@@ -13,6 +13,7 @@ EXPECTED_PACKS = {
     "handback", "spend-boundary", "veto-escrow", "delegation", "withheld-action",
     "policy-drift", "custody-relay", "slot-gate", "context-boundary", "action-governance",
     "repro-dossier", "gen-cert",  # second wave: provenance/trust cluster
+    "reserve-flow",               # clearing cluster probe (verification only)
 }
 
 

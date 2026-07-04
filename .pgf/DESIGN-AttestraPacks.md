@@ -23,6 +23,7 @@ AttestraPacks // 1차 도메인 팩 (governance·trust cluster) (designing) @v:0
     ActionGovernancePack // pre/in-flight/post 행위 판정 (designing)
     ReproDossierPack // (2차·provenance) 출력해시 일치 재현성 증명 (done)
     GenCertPack // (2차·provenance) 생성기 1회 인증→신뢰 상속 (done)
+    ReserveFlowPack // (3차·clearing 프로브) 청산 결과 검증 (보존·무충돌·우선순위) (done)
 ```
 
 > ReproDossierPack·GenCertPack은 **provenance/trust 서브클러스터**(거버넌스와 다른 계열) 팩으로,
@@ -166,3 +167,19 @@ PackExpansionRule
     DedupByFingerprint // 중복 재조합 팩은 PackLoader가 거부 (SpendBoundary류 방지)
     ProvenanceTagged // 각 팩은 source_project로 원본 저장소 추적 가능 (federate)
 ```
+
+## 4. Clearing 프로브 결론 (ADR) — 계약 경계 판정
+
+> **질문:** `packet → predicate → valid/thin/breach` 계약이 clearing/market 클러스터(다자
+> 청산)를 담는가, 아니면 별도 ClearingContract가 필요한가?
+
+**결론: ClearingContract 확장 불필요. Attestra는 순수 verdict/attestation 플랫폼으로 유지.**
+
+- Attestra 계약은 clearing의 **검증(verification)**을 커널 무수정으로 담는다 — 청산 결과 패킷이
+  보존(conservation)·무충돌(no_conflict)·우선순위(priority_order)·무결성을 만족하는지 판정.
+  **subject는 여전히 단일**(청산 라운드 1건)이고, 다자 배분(allocations)은 그 패킷 안의 *증거*다.
+- Attestra 계약은 clearing의 **계산(computation)** — 입찰 풀 → 매칭/배분 엔진 — 은 담지 **않는다**.
+  그 엔진은 패킷을 *생산*하며 원본 프로젝트(github.com/sadpig70/ReserveFlow)에 있고,
+  이미 결정론 경계 밖으로 선언된 "팩 내부 도메인/휴리스틱 단계"와 동일한 위상이다.
+- 따라서 Attestra는 **"청산을 수행"하지 않고 "청산을 증언(attest)"한다.** 이 분업으로 세 번째
+  구조상 이질적 클러스터(다자 clearing)까지 커널 변경 0으로 편입된다.
