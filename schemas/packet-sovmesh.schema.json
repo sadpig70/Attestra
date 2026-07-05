@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-sovmesh.schema.json",
+  "title": "SovMesh sovereignty-audit packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "policy", "components"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "policy": {"type": "object", "required": ["allowed_jurisdictions"], "properties": {
+      "allowed_jurisdictions": {"type": "array", "items": {"type": "string"}},
+      "allow_cross_border": {"type": "boolean"},
+      "prohibit_foreign_operator_access": {"type": "boolean"},
+      "blocked_provider_jurisdictions": {"type": "array", "items": {"type": "string"}},
+      "require_customer_managed_keys": {"type": "boolean"}}},
+    "components": {"type": "array", "items": {"type": "object", "properties": {
+      "component_id": {"type": "string"},
+      "data_classification": {"type": "string"},
+      "hosting_jurisdiction": {"type": "string"},
+      "provider_home_jurisdiction": {"type": "string"},
+      "operator_access": {"type": "boolean"},
+      "customer_managed_keys": {"type": "boolean"},
+      "cross_border_replicas": {"type": "array"}}}}
+  }
+}

@@ -14,6 +14,7 @@ EXPECTED_PACKS = {
     "policy-drift", "custody-relay", "slot-gate", "context-boundary", "action-governance",
     "repro-dossier", "gen-cert",  # second wave: provenance/trust cluster
     "reserve-flow",               # clearing cluster probe (verification only)
+    "sov-mesh",                   # BUILD_ON_PLATFORM: compat-mesh cluster (SovMesh) -> Attestra pack
 }
 
 
