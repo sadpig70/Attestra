@@ -1,3 +1,5 @@
+![Attestra](assets/Attestra_hero.png)
+
 # Attestra
 
 > **위임된 자율 행위에 대해 authority·custody·route·rollback·trace 증거를 검증하고,
