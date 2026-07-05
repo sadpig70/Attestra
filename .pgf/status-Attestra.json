@@ -85,7 +85,7 @@
     "packet_schema_enforcement": "CLOSED 2026-07-05 — added attestra_core/schema.py (stdlib mini validator) + 10 schemas/packet-*.schema.json; loader loads+errors-on-missing; run_gates enforces before predicates; 8 new tests"
   },
   "known_deferrals": {},
-  "roadmap": ".pgf/WORKPLAN-Attestra-Roadmap.md — R1 bridge done, R2 docs done, R3 release-ready in-progress, R4 publish blocked (user-gated)",
+  "roadmap": ".pgf/WORKPLAN-Attestra-Roadmap.md — COMPLETE: R1 bridge, R2 docs, R3 release, R4 publish all done",
   "next": "v0.1.0 released; roadmap complete. Future: second-wave pack expansion / HELIX write-back integration / CI.",
   "published": "https://github.com/sadpig70/Attestra (PUBLIC, main, tag v0.1.0) — 2026-07-05"
 }
