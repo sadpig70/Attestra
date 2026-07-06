@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-afferentcore.schema.json",
+  "title": "AfferentCore reflex-interruption packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "event", "operator"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "event": {"type": "object", "required": ["event_id", "risk", "irreversibility", "commit_delay_ms"], "properties": {
+      "event_id": {"type": "string"},
+      "risk": {"type": "number", "minimum": 0},
+      "irreversibility": {"type": "number", "minimum": 0},
+      "commit_delay_ms": {"type": "number", "minimum": 0}}},
+    "signal": {"type": ["object", "null"], "properties": {
+      "transmit_latency_ms": {"type": "number", "minimum": 0},
+      "perception_latency_ms": {"type": "number", "minimum": 0}}},
+    "operator": {"type": "object", "properties": {
+      "reflex_latency_ms": {"type": "number", "minimum": 0}}}
+  }
+}
