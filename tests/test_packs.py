@@ -17,6 +17,7 @@ EXPECTED_PACKS = {
     "sov-mesh",                   # BUILD_ON_PLATFORM: compat-mesh cluster (SovMesh) -> Attestra pack
     "pqc-mesh",                   # BUILD_ON_PLATFORM: compat-mesh cluster (PqcMesh) -> Attestra pack
     "signal-mesh",                # BUILD_ON_PLATFORM: compat-mesh cluster (SignalMesh) -> Attestra pack
+    "cover-gate",                 # BUILD_ON_PLATFORM: CoverGate synthesis underwriting -> Attestra gate
 }
 
 

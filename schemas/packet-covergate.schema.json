@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-covergate.schema.json",
+  "title": "CoverGate synthesis-underwriting packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "request"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "policy": {"type": "object", "properties": {
+      "max_insurable_risk": {"type": "number"},
+      "refer_risk": {"type": "number"}}},
+    "request": {"type": "object", "required": ["design_id"], "properties": {
+      "design_id": {"type": "string"},
+      "requester_reputation": {"type": "number"},
+      "novelty_distance": {"type": "number"},
+      "concern_sequence_hits": {"type": "number"},
+      "submission_velocity": {"type": "number"},
+      "tool_provenance_verified": {"type": "boolean"},
+      "exposure_value": {"type": "number"}}}
+  }
+}
