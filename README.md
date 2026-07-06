@@ -1,5 +1,7 @@
 ![Attestra](assets/Attestra_hero.png)
 
+[![CI](https://github.com/sadpig70/Attestra/actions/workflows/ci.yml/badge.svg)](https://github.com/sadpig70/Attestra/actions/workflows/ci.yml)
+
 # Attestra
 
 > **위임된 자율 행위에 대해 authority·custody·route·rollback·trace 증거를 검증하고,
@@ -72,6 +74,12 @@ Attestra/
 
 `handback`(레퍼런스) · `spend-boundary` · `veto-escrow` · `delegation` · `withheld-action` ·
 `policy-drift` · `custody-relay` · `slot-gate` · `context-boundary` · `action-governance`.
+
+**추가 흡수 팩 (총 16종):** `repro-dossier` · `gen-cert` · `reserve-flow`(clearing 검증) ·
+`sov-mesh` · `pqc-mesh` · `signal-mesh`. 뒤 3종은 "Compatibility Mesh" 클러스터를 **machine-aware
+routing**으로 흡수한 것 — 이름은 같아도 machine을 실코드로 판정해, verdict 게이트인 SovMesh/PqcMesh/
+SignalMesh만 Attestra로 들어오고 FlowMesh(→Routestra bound)·AgentMesh(→Clearstra price)는 다른
+플랫폼으로 라우팅됐다. 각 mesh 팩은 원본과의 parity 테스트를 동봉한다(`tests/test_*_mesh_parity.py`).
 
 각 팩은 `source_project`로 원본 저장소(github.com/sadpig70/*)를 추적한다.
 
