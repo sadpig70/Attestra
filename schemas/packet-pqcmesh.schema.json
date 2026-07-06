@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-pqcmesh.schema.json",
+  "title": "PqcMesh post-quantum migration packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "assets"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "assets": {"type": "array", "items": {"type": "object", "required": ["asset_id", "algorithm"], "properties": {
+      "asset_id": {"type": "string"},
+      "owner": {"type": "string"},
+      "algorithm": {"type": "string"},
+      "purpose": {"type": "string"},
+      "data_lifetime_years": {"type": "number"},
+      "device_lifetime_years": {"type": "number"},
+      "crypto_agile": {"type": "boolean"},
+      "firmware_updatable": {"type": "boolean"}}}}
+  }
+}
