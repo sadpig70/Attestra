@@ -4,9 +4,11 @@
 source_project: github.com/sadpig70/SovMesh
 
 CONDENSE FINDING (HELIX Condense): the "Compatibility Mesh" cluster (SovMesh, PqcMesh,
-AgentMesh, SignalMesh, FlowMesh) does NOT need a new platform — its machine is a
-per-item policy audit -> severity verdict, which is exactly Attestra's predicate gate.
-So the correct action is BUILD_ON_PLATFORM: add these as Attestra packs. SovMesh's
+AgentMesh, SignalMesh, FlowMesh) shares a NAME (L11 interconnection-mesh transplant) but
+NOT one machine — machine-aware routing verified each against real code and split them:
+SovMesh/PqcMesh/SignalMesh reduce to a per-item assessment -> severity verdict (exactly
+Attestra's predicate gate -> BUILD_ON_PLATFORM as packs); AgentMesh is pricing + cost
+rollup with no verdict algebra (Clearstra's machine, NOT an Attestra pack). SovMesh's
 {sovereign, conditional, breach} maps to {valid, thin, breach}. This pack reproduces
 SovMesh.audit as five predicates (parity anchor).
 """

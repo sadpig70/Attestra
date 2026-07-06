@@ -4,13 +4,15 @@
 source_project: github.com/sadpig70/PqcMesh
 
 CONDENSE FINDING (HELIX Condense): the "Compatibility Mesh" cluster (SovMesh, PqcMesh,
-AgentMesh, SignalMesh, FlowMesh) does NOT need a new platform — its machine is a
-per-item assessment -> severity verdict, which is exactly Attestra's predicate gate.
-So the correct action is BUILD_ON_PLATFORM: add PqcMesh as a pack. PqcMesh's per-asset
-verdict {quantum_safe/pqc_ready -> ok, quantum_weakened -> caution,
-quantum_broken/classically_broken -> fail} maps to {valid, thin, breach}. This pack
-reproduces PqcMesh.assess as predicates over a crypto-asset inventory (parity anchor;
-see tests/test_pqc_mesh_parity.py which checks it against the real PqcMesh when present).
+AgentMesh, SignalMesh, FlowMesh) shares a NAME but not one machine — machine-aware
+routing splits it: SovMesh/PqcMesh/SignalMesh reduce to a per-item assessment ->
+severity verdict (exactly Attestra's predicate gate -> BUILD_ON_PLATFORM as packs);
+AgentMesh is pricing + cost rollup with no verdict algebra (Clearstra's machine, NOT an
+Attestra pack). PqcMesh's per-asset verdict {quantum_safe/pqc_ready -> ok,
+quantum_weakened -> caution, quantum_broken/classically_broken -> fail} maps to
+{valid, thin, breach}. This pack reproduces PqcMesh.assess as predicates over a
+crypto-asset inventory (parity anchor; see tests/test_pqc_mesh_parity.py which checks
+it against the real PqcMesh when present).
 
 Reference values (algorithm verdicts, quantum horizon) are the public NIST PQC figures
 PqcMesh publishes as evidence (FIPS 203/204/205, 2024) — not a cryptographic audit.

@@ -16,6 +16,7 @@ EXPECTED_PACKS = {
     "reserve-flow",               # clearing cluster probe (verification only)
     "sov-mesh",                   # BUILD_ON_PLATFORM: compat-mesh cluster (SovMesh) -> Attestra pack
     "pqc-mesh",                   # BUILD_ON_PLATFORM: compat-mesh cluster (PqcMesh) -> Attestra pack
+    "signal-mesh",                # BUILD_ON_PLATFORM: compat-mesh cluster (SignalMesh) -> Attestra pack
 }
 
 
