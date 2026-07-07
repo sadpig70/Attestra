@@ -20,6 +20,7 @@ EXPECTED_PACKS = {
     "cover-gate",                 # BUILD_ON_PLATFORM: CoverGate synthesis underwriting -> Attestra gate
     "afferent-core",              # BUILD_ON_PLATFORM: AfferentCore reflex-interruption coverage -> Attestra gate
     "afferent-interrupt",         # BUILD_ON_PLATFORM: AfferentInterrupt agent runaway-loop safety -> Attestra gate
+    "spend-mesh",                 # BUILD_ON_PLATFORM: SpendMesh agent treasury control -> Attestra gate (6 controls)
 }
 
 

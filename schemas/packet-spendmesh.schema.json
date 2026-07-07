@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-spendmesh.schema.json",
+  "title": "SpendMesh treasury-control packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "policy", "request"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "policy": {"type": "object", "required": ["total_budget"], "properties": {
+      "currency": {"type": "string"},
+      "total_budget": {"type": "number", "minimum": 0},
+      "spent_to_date": {"type": "number", "minimum": 0},
+      "per_transaction_limit": {"type": "number", "minimum": 0},
+      "category_limits": {"type": "object"},
+      "rate_limit_amount": {"type": "number", "minimum": 0},
+      "rate_window": {"type": "string"},
+      "approval_threshold": {"type": "number", "minimum": 0},
+      "blocked_vendors": {"type": "array", "items": {"type": "string"}},
+      "allowed_vendors": {"type": "array", "items": {"type": "string"}}}},
+    "request": {"type": "object", "required": ["request_id", "amount"], "properties": {
+      "request_id": {"type": "string"},
+      "agent_id": {"type": "string"},
+      "amount": {"type": "number", "minimum": 0},
+      "category": {"type": "string"},
+      "vendor": {"type": "string"},
+      "window_spend_to_date": {"type": "number", "minimum": 0}}}
+  }
+}
