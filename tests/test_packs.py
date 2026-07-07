@@ -23,6 +23,7 @@ EXPECTED_PACKS = {
     "spend-mesh",                 # BUILD_ON_PLATFORM: SpendMesh agent treasury control -> Attestra gate (6 controls)
     "slot-settle-gate",           # BUILD_ON_PLATFORM: SlotSettleGate time-boxed settlement auth -> Attestra gate (3 checks)
     "method-bond",                # BUILD_ON_PLATFORM: MethodBond method/model trust-bundle -> Attestra gate (license/repro/cert)
+    "settle-mesh",                # ROUTING CORRECTION: SettleMesh (registry said Clearstra) is a 4-rule compliance gate -> Attestra
 }
 
 

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-settlemesh.schema.json",
+  "title": "SettleMesh stablecoin settlement-intent packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "intent"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "intent": {"type": "object", "required": ["asset", "amount"], "properties": {
+      "intent_id": {"type": "string"},
+      "asset": {"type": "string"},
+      "amount": {"type": "number", "minimum": 0},
+      "sender": {"type": "string"},
+      "receiver": {"type": "string"},
+      "sender_jurisdiction": {"type": "string"},
+      "receiver_jurisdiction": {"type": "string"},
+      "sender_kyc_tier": {"type": "number"},
+      "purpose": {"type": "string"}}}
+  }
+}
