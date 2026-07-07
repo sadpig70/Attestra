@@ -19,6 +19,7 @@ EXPECTED_PACKS = {
     "signal-mesh",                # BUILD_ON_PLATFORM: compat-mesh cluster (SignalMesh) -> Attestra pack
     "cover-gate",                 # BUILD_ON_PLATFORM: CoverGate synthesis underwriting -> Attestra gate
     "afferent-core",              # BUILD_ON_PLATFORM: AfferentCore reflex-interruption coverage -> Attestra gate
+    "afferent-interrupt",         # BUILD_ON_PLATFORM: AfferentInterrupt agent runaway-loop safety -> Attestra gate
 }
 
 
