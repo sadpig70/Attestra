@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-methodbond.schema.json",
+  "title": "MethodBond method/model trust-bundle packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "license": {"type": "object"},
+    "provenances": {"type": "array"},
+    "baseline_policy": {"type": "object"},
+    "candidate_policy": {"type": "object"}
+  }
+}
