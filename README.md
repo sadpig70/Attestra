@@ -70,11 +70,17 @@ Attestra/
 `handback`(레퍼런스) · `spend-boundary` · `veto-escrow` · `delegation` · `withheld-action` ·
 `policy-drift` · `custody-relay` · `slot-gate` · `context-boundary` · `action-governance`.
 
-**추가 흡수 팩 (총 16종):** `repro-dossier` · `gen-cert` · `reserve-flow`(clearing 검증) ·
-`sov-mesh` · `pqc-mesh` · `signal-mesh`. 뒤 3종은 "Compatibility Mesh" 클러스터를 **machine-aware
-routing**으로 흡수한 것 — 이름은 같아도 machine을 실코드로 판정해, verdict 게이트인 SovMesh/PqcMesh/
-SignalMesh만 Attestra로 들어오고 FlowMesh(→Routestra bound)·AgentMesh(→Clearstra price)는 다른
-플랫폼으로 라우팅됐다. 각 mesh 팩은 원본과의 parity 테스트를 동봉한다(`tests/test_*_mesh_parity.py`).
+**추가 흡수 팩 (총 23종):** 2차 — `repro-dossier` · `gen-cert` · `reserve-flow`(clearing 검증).
+compat-mesh — `sov-mesh` · `pqc-mesh` · `signal-mesh`. 3차(governance/trust 게이트) —
+`cover-gate`(합성 언더라이팅) · `afferent-core`(reflex 개입 커버리지) · `afferent-interrupt`(에이전트
+루프 차단) · `spend-mesh`(6-control treasury) · `slot-settle-gate`(정산 인가) · `method-bond`(모델
+trust-bundle) · `settle-mesh`(stablecoin 컴플라이언스).
+
+이들은 HELIX의 **machine-aware routing**이 corpus 후보를 실코드 machine으로 판정해 흡수한 것이다 —
+이름이 아니라 machine 기준: verdict 게이트만 Attestra로 오고, FlowMesh(→Routestra bound)·AgentMesh·
+MineralShock(→Clearstra price)·OrbiRoam(→Certstra certify)은 다른 플랫폼으로, SettleMesh는 이름과 달리
+게이트라 Clearstra→Attestra로 **교정 라우팅**됐다. 각 팩은 원본과의 parity 테스트를 동봉한다
+(`tests/test_*_parity.py`, 소스 있으면 실행·CI에선 skip).
 
 각 팩은 `source_project`로 원본 저장소(github.com/sadpig70/*)를 추적한다.
 
