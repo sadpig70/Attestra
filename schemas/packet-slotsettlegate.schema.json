@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-slotsettlegate.schema.json",
+  "title": "SlotSettleGate settlement-authorization packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "slot": {"type": "object"},
+    "settlement": {"type": "object"},
+    "veto_escrow": {"type": "object"}
+  }
+}

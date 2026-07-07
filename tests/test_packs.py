@@ -21,6 +21,7 @@ EXPECTED_PACKS = {
     "afferent-core",              # BUILD_ON_PLATFORM: AfferentCore reflex-interruption coverage -> Attestra gate
     "afferent-interrupt",         # BUILD_ON_PLATFORM: AfferentInterrupt agent runaway-loop safety -> Attestra gate
     "spend-mesh",                 # BUILD_ON_PLATFORM: SpendMesh agent treasury control -> Attestra gate (6 controls)
+    "slot-settle-gate",           # BUILD_ON_PLATFORM: SlotSettleGate time-boxed settlement auth -> Attestra gate (3 checks)
 }
 
 
