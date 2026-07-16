@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-authorityarbiter.schema.json",
+  "title": "AuthorityArbiter packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "arbiter", "handback"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "arbiter": {"type": "object", "required": ["decision"], "properties": {
+      "decision": {"type": "string"},
+      "selected_authority": {"type": "string"},
+      "receipt_sha256": {"type": "string"},
+      "source_project": {"type": "string"},
+      "source_result": {"type": "string"},
+      "handback_trace_sha256": {"type": "string"}}},
+    "handback": {"type": "object", "properties": {
+      "route_id": {"type": "string"},
+      "return_to": {"type": "string"},
+      "confirmed": {"type": "boolean"}}}
+  }
+}

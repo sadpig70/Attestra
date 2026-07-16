@@ -24,6 +24,11 @@ EXPECTED_PACKS = {
     "slot-settle-gate",           # BUILD_ON_PLATFORM: SlotSettleGate time-boxed settlement auth -> Attestra gate (3 checks)
     "method-bond",                # BUILD_ON_PLATFORM: MethodBond method/model trust-bundle -> Attestra gate (license/repro/cert)
     "settle-mesh",                # ROUTING CORRECTION: SettleMesh (registry said Clearstra) is a 4-rule compliance gate -> Attestra
+    "proof-escrow",               # Phase 4: evidence-bound artifact release escrow -> Attestra gate
+    "authority-arbiter",          # Phase 4: delegated policy conflict arbitration -> Attestra gate
+    "drift-isolator",             # Phase 4: runtime drift counterexample isolation -> Attestra gate
+    "graph-quarantine",           # Phase 4: path-aware evidence quarantine -> Attestra gate
+    "hook-circuit",               # Phase 4: plugin hook circuit breaker -> Attestra gate
 }
 
 

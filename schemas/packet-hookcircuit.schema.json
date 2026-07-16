@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-hookcircuit.schema.json",
+  "title": "HookCircuit packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "hook"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "hook": {"type": "object", "required": ["decision"], "properties": {
+      "decision": {"type": "string"},
+      "tripped_hooks": {"type": "array", "items": {"type": "object"}},
+      "allowed_hooks": {"type": "array", "items": {"type": "string"}},
+      "interrupted": {"type": "boolean"},
+      "receipt_sha256": {"type": "string"},
+      "source_project": {"type": "string"},
+      "source_result": {"type": "string"},
+      "handback_trace_sha256": {"type": "string"}}}
+  }
+}

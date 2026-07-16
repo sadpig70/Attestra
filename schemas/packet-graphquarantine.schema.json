@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "attestra/packet-graphquarantine.schema.json",
+  "title": "GraphQuarantine packet (structural contract)",
+  "type": "object",
+  "required": ["packet_id", "graph"],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "subject": {"type": "string"},
+    "graph": {"type": "object", "required": ["decision"], "properties": {
+      "decision": {"type": "string"},
+      "clean_branches": {"type": "array", "items": {"type": "string"}},
+      "quarantine_set": {"type": "array", "items": {"type": "string"}},
+      "blast_radius": {"type": "number"},
+      "receipt_sha256": {"type": "string"},
+      "source_project": {"type": "string"},
+      "source_result": {"type": "string"},
+      "handback_trace_sha256": {"type": "string"}}}
+  }
+}
